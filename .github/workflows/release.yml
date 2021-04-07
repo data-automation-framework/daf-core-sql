@@ -15,15 +15,15 @@ jobs:
       DOTNET_NOLOGO: true
       DOTNET_CLI_TELEMETRY_OPTOUT: true
     steps:
-      # - name: Check PR labels action step
-      #   id: labelcheck
-      #   uses: shioyang/check-pr-labels-on-push-action@v1.0.3
-      #   with:
-      #     github-token: ${{ secrets.GITHUB_TOKEN }}
-      #     labels: '["create-release"]'
-      # - name: Continue only if the create-release label exists, fail otherwise.
-      #   if: steps.labelcheck.outputs.result != 'true'
-      #   run: exit 1
+      - name: Check PR labels action step
+        id: labelcheck
+        uses: shioyang/check-pr-labels-on-push-action@v1.0.3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          labels: '["create-release"]'
+      - name: Continue only if the create-release label exists, fail otherwise.
+        if: steps.labelcheck.outputs.result != 'true'
+        run: exit 1
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0 # Avoid shallow clone so nbgv can do its work.
@@ -36,15 +36,15 @@ jobs:
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           tag: v${{ steps.nbgv.outputs.SimpleVersion }}
-      # - name: Build changelog
-      #   id: build_changelog
-      #   uses: mikepenz/release-changelog-builder-action@v1.7.1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     failOnError: true
-      #     configuration: "configs/configuration.json"
-      #     toTag: v${{ steps.nbgv.outputs.SimpleVersion }}
+      - name: Build changelog
+        id: build_changelog
+        uses: mikepenz/release-changelog-builder-action@v1.7.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          failOnError: true
+          configuration: "configs/configuration.json"
+          toTag: v${{ steps.nbgv.outputs.SimpleVersion }}
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1.7.2
         with:
@@ -56,18 +56,18 @@ jobs:
         run: dotnet build --configuration Release
       - name: Create the nuget package
         run: dotnet pack Daf.Core.Sql/Daf.Core.Sql.csproj --configuration Release --output Daf.Core.Sql/bin/Release/Publish
-      # - name: Publish to GitHub
-      #   run: dotnet nuget push Daf.Core.Sql/bin/Release/Publish/**/*.nupkg --skip-duplicate --api-key ${{ secrets.GITHUB_TOKEN }}
-      # - name: Create release
-      #   uses: softprops/action-gh-release@v1
-      #   with:
-      #     name: ${{ steps.nbgv.outputs.SimpleVersion }}
-      #     tag_name: v${{ steps.nbgv.outputs.SimpleVersion }}
-      #     body: ${{steps.build_changelog.outputs.changelog}}
-      #     draft: false
-      #     prerelease: false
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish to GitHub
+        run: dotnet nuget push Daf.Core.Sql/bin/Release/Publish/**/*.nupkg --skip-duplicate --api-key ${{ secrets.GITHUB_TOKEN }}
+      - name: Create release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: ${{ steps.nbgv.outputs.SimpleVersion }}
+          tag_name: v${{ steps.nbgv.outputs.SimpleVersion }}
+          body: ${{steps.build_changelog.outputs.changelog}}
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Move latest MajorMinor version tag
         uses: EndBug/latest-tag@v1.4.0
         with:
