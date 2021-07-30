@@ -19,7 +19,7 @@
   <ItemGroup>
     <PackageReference Include="Daf.Core.Sdk" Version="0.0.8" />
     <PackageReference Include="LumenWorksCsvReader" Version="4.0.0" />
-    <PackageReference Include="Nerdbank.GitVersioning" Version="3.4.220">
+    <PackageReference Include="Nerdbank.GitVersioning" Version="3.4.231">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
