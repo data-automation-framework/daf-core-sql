@@ -17,14 +17,14 @@ jobs:
     steps:
       - name: Check PR labels action step
         id: labelcheck
-        uses: shioyang/check-pr-labels-on-push-action@v1.0.3
+        uses: shioyang/check-pr-labels-on-push-action@v1.0.4
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           labels: '["create-release"]'
       - name: Continue only if the create-release label exists, fail otherwise.
         if: steps.labelcheck.outputs.result != 'true'
         run: exit 1
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0 # Avoid shallow clone so nbgv can do its work.
       - name: Setup Nerdbank.GitVersioning
