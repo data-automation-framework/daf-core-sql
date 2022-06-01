@@ -28,3 +28,6 @@ dotnet_diagnostic.CA1724.severity = none
 # CS1685: A predefined type is defined in multiple assemblies in the global alias
 # This warning happens in one of our .NET Standard compatibility libraries, impossible to avoid.
 dotnet_diagnostic.CS1685.severity = none
+
+# CA1305: Specify IFormatProvider
+dotnet_diagnostic.CA1305.severity = none

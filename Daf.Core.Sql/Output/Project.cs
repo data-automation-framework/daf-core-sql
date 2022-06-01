@@ -216,9 +216,10 @@ namespace Daf.Core.Sql.Output
 
 		private string GetFolderIncludes()
 		{
-			List<string> includeLines = new();
-
-			includeLines.Add($"    <Folder Include=\"{Database.Name}\\Security\\\" />");
+			List<string> includeLines = new()
+			{
+				$"    <Folder Include=\"{Database.Name}\\Security\\\" />"
+			};
 
 			// Iterate over the schema structure and only add each type of folder include a maximum of one time per schema.
 			foreach (KeyValuePair<string, Schema> schema in Database.Schemas)
