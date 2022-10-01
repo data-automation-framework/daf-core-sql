@@ -46,7 +46,7 @@ jobs:
           configuration: "configs/configuration.json"
           toTag: v${{ steps.nbgv.outputs.SimpleVersion }}
       - name: Setup .NET Core
-        uses: actions/setup-dotnet@v2.1.0
+        uses: actions/setup-dotnet@v3.0.0
         with:
           dotnet-version: 6.0.x # SDK Version to use.
           source-url: https://api.nuget.org/v3/index.json
