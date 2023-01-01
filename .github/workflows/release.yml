@@ -77,7 +77,7 @@ jobs:
         with:
           ref: v${{ steps.nbgv.outputs.VersionMajor }}
       - name: Repository dispatch
-        uses: peter-evans/repository-dispatch@v2.0.0
+        uses: peter-evans/repository-dispatch@v2.1.1
         with:
           token: ${{ secrets.REPO_PUBLIC }}
           repository: data-automation-framework/docs
